@@ -32,6 +32,7 @@ app.get('/users', async (_:Request, res: Response)=>{
         return res.status(500).json(err)
     }
 })
+
 //UPDATE
 app.put('/users/:uuid', async(req: Request, res: Response)=>{
     const uuid = req.params.uuid
@@ -52,7 +53,20 @@ app.put('/users/:uuid', async(req: Request, res: Response)=>{
     }
 
 })
+
 //DELETE
+app.delete('/users/:uuid', async(req: Request, res: Response) =>{
+    const uuid = req.params.uuid
+    try{
+        const user = await User.findOneOrFail({uuid})
+        await user.remove()
+        return res.status(204).json({message: "You killed them"})
+    } catch(err){
+        console.log(err)
+        return res.status(500).json({error:"SOME FUCKER KILLED the UNTAMED SHITPOST"})
+    }
+})
+
 //FIND
 
 createConnection().then(async () => {
