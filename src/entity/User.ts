@@ -1,16 +1,13 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn} from "typeorm";
 
-@Entity()
+@Entity("users")
 export class User extends BaseEntity{
 
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    firstName: string;
-
-    @Column()
-    lastName: string;
+    name: string;
 
     @Column()
     email: string;
@@ -18,4 +15,12 @@ export class User extends BaseEntity{
     @Column()
     role: string;
 
+    @Column({type: 'uuid'})
+    uuid: string; 
+    
+    @CreateDateColumn()
+    createdAt: Date;
+    
+    @CreateDateColumn()
+    updatedAt: Date;
 }
