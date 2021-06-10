@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn} from "typeorm";
-
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, BeforeInsert} from "typeorm";
+import { v4 as uuid } from 'uuid'
 @Entity("users")
 export class User extends BaseEntity{
 
@@ -17,10 +17,19 @@ export class User extends BaseEntity{
 
     @Column({type: 'uuid'})
     uuid: string; 
-    
+
     @CreateDateColumn()
     createdAt: Date;
     
-    @CreateDateColumn()
+    @UpdateDateColumn()
     updatedAt: Date;
+
+    @BeforeInsert()
+    createUuid(){
+        this.uuid = uuid();
+    }
+
+    toJSON(){
+        return { ...this, id: undefined}
+    }
 }
