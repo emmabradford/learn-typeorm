@@ -68,6 +68,16 @@ app.delete('/users/:uuid', async(req: Request, res: Response) =>{
 })
 
 //FIND
+app.get('/users/:uuid', async(req: Request, res: Response) => {
+    const uuid = req.params.uuid
+    try{
+        const user = await User.findOneOrFail({uuid})
+        return res.json(user)
+    }catch(err){
+        console.log(err)
+        return res.status(404).json({user: "I could not find them!"})
+    }
+})
 
 createConnection().then(async () => {
 //    const user = new User();
