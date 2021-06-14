@@ -2,6 +2,7 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {User} from "./entity/User";
 import express, { Request, Response } from "express";
+import { Post } from "./entity/Post";
 
 const app = express()
 app.use(express.json())
@@ -76,6 +77,18 @@ app.get('/users/:uuid', async(req: Request, res: Response) => {
     }catch(err){
         console.log(err)
         return res.status(404).json({user: "I could not find them!"})
+    }
+})
+
+//CREATE A POST
+app.post('/posts', async(req: Request, res: Response)=>{
+    const {userUuid, title, body} = req.body
+    try{
+        const user = await User.findOneOrFail({uuid: userUuid})
+        const post = new Post({title, body})
+    } catch(err){
+        console.log(err)
+        return res.status(500).json({error:'It did not work'})
     }
 })
 
