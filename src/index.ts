@@ -85,7 +85,9 @@ app.post('/posts', async(req: Request, res: Response)=>{
     const {userUuid, title, body} = req.body
     try{
         const user = await User.findOneOrFail({uuid: userUuid})
-        const post = new Post({title, body})
+        const post = new Post({title, body, user})
+        await post.save()
+        return res.json(post)
     } catch(err){
         console.log(err)
         return res.status(500).json({error:'It did not work'})

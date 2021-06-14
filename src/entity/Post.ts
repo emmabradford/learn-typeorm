@@ -1,4 +1,4 @@
-import {Entity, ManyToOne, Column} from "typeorm";
+import {Entity, Column, ManyToOne} from "typeorm";
 import Model from './model';
 import {User} from './User';
 
@@ -8,13 +8,8 @@ export class Post extends Model{
     title:string
 
     @Column()
-    body: 
+    body: string 
     
-    @ManyToOne(()=> User)
+    @ManyToOne(() => User)
     user: User
-
-    constructor({title, body}: {title: string, body: string}){
-        super()
-        Object.assign(this, {title, body})
-    }
 }
